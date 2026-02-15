@@ -40,11 +40,7 @@ See [docs/business-requirements.md](../docs/business-requirements.md) for full p
 
 ### Architecture Decision
 
-**PWA** - Single web codebase for fastest MVP deployment
-
-See [docs/technical/](../docs/technical/) for detailed option analysis.
-
----
+## **PWA** - Single web codebase for fastest MVP deployment
 
 ## Code Structure
 
@@ -212,24 +208,19 @@ All features must meet WCAG 2.1 AA standards:
 
 ---
 
-## Starting Development
+## Development workflow
 
-1. **Confirm tech decisions** from [docs/technical/](../docs/technical/)
-2. **Set up project structure** using recommended stack above
-3. **Create base components** using shadcn/ui (Button, Input, Card, Dialog, etc.)
-4. **Implement authentication** first (foundational for all other features)
-5. **Build savings goals CRUD** (create, read, update, delete)
-6. **Implement savings action recording** with feedback
-7. **Add gamification** (streaks, badges, progress)
-8. **Testing & refinement**
+1. **Confirm implementation plan** from [docs/plan/](../docs/plans//)
+2. **Follow the plan** update Todo task based on the plan
+3. **Implement changes** one by one task and update task status
+4. **Testing & refinement**
 
 ---
 
 ## Resources
 
 - [Business Requirements](../docs/business-requirements.md)
-- [User Story: Celebrate Saving Action](../docs/user-stories/US-001-celebrate-saving-action.md)
-- [Technical Options Analysis](../docs/technical/)
+- [User Story](../docs/user-stories/)
 
 ---
 
