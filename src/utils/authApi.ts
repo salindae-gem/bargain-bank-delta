@@ -3,7 +3,7 @@
  * Handles API calls to auth endpoints
  */
 
-import type { LoginRequest, AuthResponse } from '../types/auth';
+import type { LoginRequest, SignUpRequest, AuthResponse } from '../types/auth';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
@@ -19,6 +19,23 @@ export async function login(credentials: LoginRequest): Promise<AuthResponse> {
   if (!response.ok) {
     const error = await response.json().catch(() => ({}));
     throw new Error(error.error || 'Login failed');
+  }
+
+  return response.json();
+}
+
+export async function signup(credentials: SignUpRequest): Promise<AuthResponse> {
+  const response = await fetch(`${API_BASE_URL}/auth/signup`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}));
+    throw new Error(error.error || 'Sign up failed');
   }
 
   return response.json();

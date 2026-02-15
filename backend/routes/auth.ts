@@ -1,11 +1,11 @@
 /**
  * Authentication Routes
- * Handles login, logout, and user profile endpoints
+ * Handles login, logout, signup, and user profile endpoints
  */
 
 import { Hono, Context } from 'hono';
 import { zValidator } from '@hono/zod-validator';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import { authMiddleware, generateToken, Variables } from '../middleware/auth';
 import { rateLimitMiddleware } from '../middleware/rateLimit';
 import {
@@ -13,6 +13,8 @@ import {
   getUserById,
   verifyPassword,
   logLoginAttempt,
+  hashPassword,
+  createUser,
 } from '../services/authService';
 
 type AppContext = Context<{ Variables: Variables }>;
@@ -24,6 +26,39 @@ const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(1, 'Password is required'),
 });
+
+const signupSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, 'Email is required')
+      .email('Please enter a valid email address'),
+    password: z
+      .string()
+      .min(8, 'Password must be at least 8 characters')
+      .regex(/\d/, 'Password must contain at least one number')
+      .regex(
+        /[!@#$%^&*]/,
+        'Password must contain at least one special character (!@#$%^&*)'
+      ),
+    passwordConfirmation: z.string().min(1, 'Please confirm your password'),
+  })
+  .refine((data) => data.password === data.passwordConfirmation, {
+    message: 'Passwords do not match',
+    path: ['passwordConfirmation'],
+  });
+
+// Helper function to format Zod errors
+function formatZodErrors(error: ZodError): Record<string, string> {
+  const errors: Record<string, string> = {};
+  if (error.issues) {
+    error.issues.forEach((issue) => {
+      const field = issue.path.join('.');
+      errors[field || 'root'] = issue.message;
+    });
+  }
+  return errors;
+}
 
 // POST /auth/login
 authRouter.post(
@@ -82,6 +117,81 @@ authRouter.post(
   }
 );
 
+// POST /auth/signup
+authRouter.post('/signup', rateLimitMiddleware, async (c) => {
+  try {
+    // Parse and validate JSON
+    let body;
+    try {
+      body = await c.req.json();
+    } catch {
+      return c.json(
+        { success: false, error: 'Invalid JSON' },
+        400
+      );
+    }
+
+    // Validate with Zod
+    const validationResult = signupSchema.safeParse(body);
+    if (!validationResult.success) {
+      const errors = formatZodErrors(validationResult.error);
+      return c.json(
+        {
+          success: false,
+          error: 'Validation failed',
+          errors,
+        },
+        400
+      );
+    }
+
+    const { email, password } = validationResult.data;
+
+    // Check if email already exists
+    const existingUser = getUserByEmail(email);
+
+    if (existingUser) {
+      return c.json(
+        {
+          success: false,
+          error: 'This email is already registered',
+          field: 'email',
+        },
+        409
+      );
+    }
+
+    // Hash password
+    const passwordHash = await hashPassword(password);
+
+    // Create user
+    const newUser = createUser(email, passwordHash);
+
+    // Generate token
+    const token = await generateToken(newUser.id, newUser.email);
+
+    return c.json(
+      {
+        success: true,
+        token,
+        user: {
+          id: newUser.id,
+          email: newUser.email,
+          created_at: newUser.created_at,
+        },
+        message: 'Account created successfully!',
+      },
+      201
+    );
+  } catch (error) {
+    console.error('Signup error:', error);
+    return c.json(
+      { success: false, error: 'An error occurred during sign up' },
+      500
+    );
+  }
+});
+
 // POST /auth/logout
 authRouter.post('/logout', (c) => {
   // In a real app, you might invalidate tokens here
@@ -122,3 +232,5 @@ authRouter.get('/me', authMiddleware, async (c: AppContext) => {
 });
 
 export default authRouter;
+
+

@@ -145,16 +145,16 @@ User
 
 ```bash
 # Frontend
-npm install                 # Install dependencies
-npm run dev                # Start dev server (localhost:5173)
-npm run build              # Build for production
-npm run preview            # Preview production build locally
-npm run test               # Run tests
-npm run test:coverage      # Run tests with coverage
+pnpm install                 # Install dependencies
+pnpm run dev                # Start dev server (localhost:5173 frontend, localhost:3000 backend) (both backend and frontend)
+pnpm run build              # Build for production
+pnpm run preview            # Preview production build locally
+pnpm run test               # Run tests
+pnpm run test:coverage      # Run tests with coverage
 
 # Backend (if applicable)
-npm run dev:backend        # Start backend dev server
-npm run deploy             # Deploy (Cloudflare/Node.js)
+pnpm run dev:server        # Start backend dev server (localhost:3000)
+pnpm run deploy             # Deploy (Cloudflare/Node.js)
 ```
 
 **Note:** Commands will be added once project is initialized.

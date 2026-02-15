@@ -5,6 +5,7 @@
 
 import { createRootRoute, createRoute, Router, redirect } from '@tanstack/react-router';
 import { LoginPage } from './features/Auth/LoginPage';
+import { SignUpPage } from './features/Auth/SignUpPage';
 import { DashboardPage } from './features/Auth/DashboardPage';
 import useAuthStore from './stores/authStore';
 import RootLayout from './layouts/RootLayout';
@@ -19,6 +20,13 @@ const loginRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/login',
     component: LoginPage,
+});
+
+// Sign up route
+const signupRoute = createRoute({
+    getParentRoute: () => rootRoute,
+    path: '/signup',
+    component: SignUpPage,
 });
 
 // Dashboard route (protected)
@@ -52,6 +60,7 @@ const indexRoute = createRoute({
 // Create route tree
 const routeTree = rootRoute.addChildren([
     loginRoute,
+    signupRoute,
     dashboardRoute,
     indexRoute,
 ]);

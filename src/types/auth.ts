@@ -14,11 +14,26 @@ export interface LoginRequest {
     password: string;
 }
 
+export interface SignUpRequest {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+}
+
+export interface SignUpResponse {
+    success: boolean;
+    token?: string;
+    user?: User;
+    error?: string;
+    errors?: Record<string, string>;
+}
+
 export interface AuthResponse {
     success: boolean;
     token?: string;
     user?: User;
     error?: string;
+    errors?: Record<string, string>;
 }
 
 export interface AuthState {
