@@ -1,10 +1,20 @@
 /**
  * DashboardPage Component
  * Shows user's savings dashboard (placeholder for MVP)
+ * Accessibility: WCAG 2.1 AA compliant
+ * Uses shadcn components for consistent UI
  */
 
-import { useNavigate } from '@tanstack/react-router';
-import { useAuth } from '../../hooks/useAuth';
+import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "../../hooks/useAuth";
+import { Button } from "../../components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../../components/ui/card";
+import { formatDate } from "../../utils/dateFormat";
 
 export function DashboardPage() {
   const { user, logout } = useAuth();
@@ -12,73 +22,83 @@ export function DashboardPage() {
 
   const handleLogout = () => {
     logout();
-    navigate({ to: '/login' });
+    navigate({ to: "/login" });
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-4xl font-bold text-gray-900">Dashboard</h1>
-            <p className="text-gray-600 mt-2">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary px-4 py-6">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Header Section */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-start">
+          <div className="space-y-2">
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground">
+              Dashboard
+            </h1>
+            <p className="text-muted-foreground">
               Welcome back, {user?.email}!
             </p>
           </div>
-          <button
+          <Button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+            variant="destructive"
+            size="lg"
+            className="w-full sm:w-auto"
           >
             Logout
-          </button>
+          </Button>
         </div>
 
-        {/* Placeholder Content */}
+        {/* Placeholder Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Savings Goals
-            </h2>
-            <p className="text-gray-600">
-              Your savings goals will appear here (coming soon in Phase 2)
-            </p>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">Savings Goals</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Your savings goals will appear here (coming soon in Phase 2)
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Recent Activity
-            </h2>
-            <p className="text-gray-600">
-              Recent savings actions will appear here (coming soon in Phase 2)
-            </p>
-          </div>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-xl">Recent Activity</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Recent savings actions will appear here (coming soon in Phase 2)
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* User Info */}
-        <div className="mt-6 bg-white p-6 rounded-lg shadow">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Profile Information
-          </h2>
-          <dl className="space-y-2">
-            <div>
-              <dt className="font-medium text-gray-700">Email:</dt>
-              <dd className="text-gray-600">{user?.email}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-gray-700">User ID:</dt>
-              <dd className="text-gray-600 text-sm font-mono">{user?.id}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-gray-700">Joined:</dt>
-              <dd className="text-gray-600">
-                {user?.created_at
-                  ? new Date(user.created_at).toLocaleDateString()
-                  : 'N/A'}
-              </dd>
-            </div>
-          </dl>
-        </div>
+        {/* User Info Card */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Profile Information</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <dl className="space-y-4">
+              <div className="space-y-1">
+                <dt className="font-semibold text-foreground">Email</dt>
+                <dd className="text-muted-foreground">{user?.email}</dd>
+              </div>
+              <div className="space-y-1">
+                <dt className="font-semibold text-foreground">User ID</dt>
+                <dd className="text-muted-foreground text-sm font-mono break-all">
+                  {user?.id}
+                </dd>
+              </div>
+              <div className="space-y-1">
+                <dt className="font-semibold text-foreground">Joined</dt>
+                <dd className="text-muted-foreground">
+                  {user?.created_at ? formatDate(user.created_at) : "N/A"}
+                </dd>
+              </div>
+            </dl>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

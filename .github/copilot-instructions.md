@@ -91,6 +91,7 @@ bargain-bank/
 - Use component co-location: place styles and hooks near where they're used
 - Prefer composition over deeply nested props
 - Keep components focused on a single responsibility
+- Use shadcn/ui components for base UI elements, customize with Tailwind as needed
 
 ### File Naming
 
@@ -105,6 +106,11 @@ bargain-bank/
 - Use shadcn/ui components for base UI elements
 - Avoid custom CSS where Tailwind can solve it
 - Mobile-first: start with mobile styles, then add breakpoints
+
+### Color Palette
+
+- Use **TailwindCSS theme-based colors** (Tailwind's default palette already complies with WCAG 2.1 AA contrast requirements)
+- Leverage Tailwind's semantic color utilities (e.g., `text-primary`, `bg-primary`) for consistency
 
 ### Testing
 
@@ -224,5 +230,5 @@ All features must meet WCAG 2.1 AA standards:
 
 ---
 
-**Last Updated:** February 14, 2026  
+**Last Updated:** February 15, 2026  
 **Maintained By:** Development Team

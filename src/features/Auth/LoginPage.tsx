@@ -6,14 +6,16 @@
  */
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Loader2, AlertCircle, X } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import useAuthStore from "../../stores/authStore";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
+import { PasswordInput } from "../../components/PasswordInput";
 import {
   Card,
   CardContent,
@@ -21,7 +23,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import {
   Form,
   FormControl,
@@ -33,14 +34,14 @@ import {
 
 // Validation schema
 const loginSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.email("Please enter a valid email address").trim().toLowerCase(),
   password: z.string().min(1, "Password is required"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [displayedError, setDisplayedError] = useState<string | null>(null);
   const { login, isLoading, error } = useAuth();
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -56,6 +57,18 @@ export function LoginPage() {
     }
   }, [isAuthenticated, navigate]);
 
+  // Handle error display with auto-dismiss
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    // Defer state update to next microtask to avoid cascading renders
+    queueMicrotask(() => setDisplayedError(error));
+    const timeoutId = setTimeout(() => setDisplayedError(null), 5000);
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+
   const onSubmit = async (data: LoginFormData) => {
     try {
       await login(data.email, data.password);
@@ -67,7 +80,7 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center px-4 py-6">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-2">
           <CardTitle className="text-3xl">Bargain Bank</CardTitle>
@@ -78,11 +91,29 @@ export function LoginPage() {
 
         <CardContent className="space-y-6">
           {/* Error Alert */}
-          {error && (
-            <Alert variant="destructive">
-              <AlertTitle>Login Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+          {displayedError && (
+            <div className="relative bg-destructive/10 border border-destructive/30 rounded-lg p-3 pr-10">
+              <div className="flex gap-3">
+                <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-destructive mb-1">
+                    Login Error
+                  </h3>
+                  <p className="text-sm text-destructive/90">
+                    {displayedError}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setDisplayedError(null)}
+                className="absolute right-2 top-2 h-6 w-6 p-0"
+                aria-label="Close error message"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           )}
 
           {/* Login Form */}
@@ -117,25 +148,13 @@ export function LoginPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
-                          autoComplete="current-password"
-                          disabled={isLoading}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-2 py-1"
-                          aria-label={
-                            showPassword ? "Hide password" : "Show password"
-                          }
-                        >
-                          {showPassword ? "🙈 Hide" : "👁️ Show"}
-                        </button>
-                      </div>
+                      <PasswordInput
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Enter your password"
+                        autoComplete="current-password"
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -149,20 +168,21 @@ export function LoginPage() {
                 className="w-full"
                 size="lg"
               >
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </Form>
 
           {/* Sign Up Link */}
-          <div className="text-center text-sm text-gray-600">
+          <div className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
-            <a
-              href="/signup"
-              className="font-semibold text-indigo-600 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-1"
+            <Link
+              to="/signup"
+              className="font-semibold text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded px-1"
             >
               Sign up here
-            </a>
+            </Link>
           </div>
         </CardContent>
       </Card>

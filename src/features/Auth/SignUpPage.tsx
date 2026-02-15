@@ -6,13 +6,15 @@
  */
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, AlertCircle, X } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import useAuthStore from "../../stores/authStore";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
+import { PasswordInput } from "../../components/PasswordInput";
 import {
   Card,
   CardContent,
@@ -20,7 +22,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert";
 import {
   Form,
   FormControl,
@@ -33,12 +34,15 @@ import {
   signupSchema,
   type SignUpFormData,
 } from "../../utils/validation/signupSchema";
+import {
+  getPasswordStrength,
+  getStrengthColor,
+  getStrengthLabel,
+} from "../../utils/passwordStrength";
 
 export function SignUpPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirmation, setShowPasswordConfirmation] =
-    useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [displayedError, setDisplayedError] = useState<string | null>(null);
   const { signup, isLoading, error } = useAuth();
   const navigate = useNavigate();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -49,6 +53,8 @@ export function SignUpPage() {
   });
 
   const password = form.watch("password");
+  const passwordStrength = getPasswordStrength(password);
+  const isFormValid = form.formState.isValid;
 
   // Redirect to dashboard if already authenticated
   useEffect(() => {
@@ -67,9 +73,22 @@ export function SignUpPage() {
     }
   }, [successMessage, navigate]);
 
+  // Handle error display with auto-dismiss
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    // Defer state update to next microtask to avoid cascading renders
+    queueMicrotask(() => setDisplayedError(error));
+    const timeoutId = setTimeout(() => setDisplayedError(null), 5000);
+    return () => clearTimeout(timeoutId);
+  }, [error]);
+
   const onSubmit = async (data: SignUpFormData) => {
     try {
       setSuccessMessage("");
+      setDisplayedError(null);
       await signup(data.email, data.password, data.passwordConfirmation);
       setSuccessMessage("Your account created! Let's get started.");
       form.reset();
@@ -78,23 +97,8 @@ export function SignUpPage() {
     }
   };
 
-  // Password strength indicator
-  const getPasswordStrength = () => {
-    if (!password) return null;
-
-    let strength = 0;
-    if (password.length >= 8) strength++;
-    if (/\d/.test(password)) strength++;
-    if (/[!@#$%^&*]/.test(password)) strength++;
-
-    return strength;
-  };
-
-  const passwordStrength = getPasswordStrength();
-  const isFormValid = form.formState.isValid;
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4 py-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary flex items-center justify-center px-4 py-6">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center space-y-2">
           <CardTitle className="text-3xl">Bargain Bank</CardTitle>
@@ -105,19 +109,41 @@ export function SignUpPage() {
 
         <CardContent className="space-y-6">
           {/* Error Alert */}
-          {error && (
-            <Alert variant="destructive">
-              <AlertTitle>Sign Up Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
+          {displayedError && (
+            <div className="relative bg-destructive/10 border border-destructive/30 rounded-lg p-3 pr-10">
+              <div className="flex gap-3">
+                <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-destructive mb-1">
+                    Sign Up Error
+                  </h3>
+                  <p className="text-sm text-destructive/90">
+                    {displayedError}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setDisplayedError(null)}
+                className="absolute right-2 top-2 h-6 w-6 p-0"
+                aria-label="Close error message"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           )}
 
           {/* Success Message */}
           {successMessage && (
-            <Alert className="bg-green-50 border-green-500 text-green-900">
-              <AlertTitle>Success</AlertTitle>
-              <AlertDescription>{successMessage}</AlertDescription>
-            </Alert>
+            <div className="bg-accent/10 border border-accent/30 rounded-lg p-3">
+              <div className="flex gap-3">
+                <div>
+                  <h3 className="font-semibold text-accent mb-1">Success</h3>
+                  <p className="text-sm text-accent/90">{successMessage}</p>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Sign Up Form */}
@@ -152,37 +178,25 @@ export function SignUpPage() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          type={showPassword ? "text" : "password"}
-                          placeholder="Create a strong password"
-                          autoComplete="new-password"
-                          disabled={isLoading}
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-2 py-1"
-                          aria-label={
-                            showPassword ? "Hide password" : "Show password"
-                          }
-                        >
-                          {showPassword ? "🙈 Hide" : "👁️ Show"}
-                        </button>
-                      </div>
+                      <PasswordInput
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Create a strong password"
+                        autoComplete="new-password"
+                        disabled={isLoading}
+                      />
                     </FormControl>
 
                     {/* Password Requirements */}
-                    <div className="mt-3 p-3 bg-gray-50 rounded border border-gray-200 space-y-2">
-                      <p className="text-xs font-semibold text-gray-700">
+                    <div className="mt-3 p-3 bg-muted rounded border border-border space-y-2">
+                      <p className="text-xs font-semibold text-foreground">
                         Password requirements:
                       </p>
-                      <ul className="space-y-1 text-xs text-gray-600">
+                      <ul className="space-y-1 text-xs text-muted-foreground">
                         <li
                           className={
                             password && password.length >= 8
-                              ? "text-indigo-600 font-medium"
+                              ? "text-primary font-medium"
                               : ""
                           }
                         >
@@ -191,7 +205,7 @@ export function SignUpPage() {
                         <li
                           className={
                             password && /\d/.test(password)
-                              ? "text-indigo-600 font-medium"
+                              ? "text-primary font-medium"
                               : ""
                           }
                         >
@@ -200,7 +214,7 @@ export function SignUpPage() {
                         <li
                           className={
                             password && /[!@#$%^&*]/.test(password)
-                              ? "text-indigo-600 font-medium"
+                              ? "text-primary font-medium"
                               : ""
                           }
                         >
@@ -217,20 +231,14 @@ export function SignUpPage() {
                                 key={i}
                                 className={`flex-1 rounded-full transition-colors ${
                                   passwordStrength! > i
-                                    ? passwordStrength === 3
-                                      ? "bg-indigo-500"
-                                      : passwordStrength === 2
-                                        ? "bg-yellow-500"
-                                        : "bg-orange-500"
-                                    : "bg-gray-300"
+                                    ? getStrengthColor(passwordStrength!)
+                                    : "bg-muted-foreground/20"
                                 }`}
                               />
                             ))}
                           </div>
-                          <p className="text-xs mt-1 font-medium text-gray-600">
-                            {passwordStrength === 1 && "Weak"}
-                            {passwordStrength === 2 && "Medium"}
-                            {passwordStrength === 3 && "Strong"}
+                          <p className="text-xs mt-1 font-medium text-muted-foreground">
+                            {getStrengthLabel(passwordStrength || 0)}
                           </p>
                         </div>
                       )}
@@ -249,31 +257,13 @@ export function SignUpPage() {
                   <FormItem>
                     <FormLabel>Confirm Password</FormLabel>
                     <FormControl>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          type={showPasswordConfirmation ? "text" : "password"}
-                          placeholder="Re-enter your password"
-                          autoComplete="new-password"
-                          disabled={isLoading}
-                        />
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setShowPasswordConfirmation(
-                              !showPasswordConfirmation,
-                            )
-                          }
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-2 py-1"
-                          aria-label={
-                            showPasswordConfirmation
-                              ? "Hide password confirmation"
-                              : "Show password confirmation"
-                          }
-                        >
-                          {showPasswordConfirmation ? "🙈 Hide" : "👁️ Show"}
-                        </button>
-                      </div>
+                      <PasswordInput
+                        value={field.value}
+                        onChange={field.onChange}
+                        placeholder="Re-enter your password"
+                        autoComplete="new-password"
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -287,20 +277,21 @@ export function SignUpPage() {
                 className="w-full"
                 size="lg"
               >
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {isLoading ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
           </Form>
 
           {/* Sign In Link */}
-          <div className="text-center text-sm text-gray-600">
+          <div className="text-center text-sm text-muted-foreground">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-semibold text-indigo-600 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded px-1"
+            <Link
+              to="/login"
+              className="font-semibold text-primary hover:underline focus:outline-none focus:ring-2 focus:ring-primary rounded px-1"
             >
               Sign in here
-            </a>
+            </Link>
           </div>
         </CardContent>
       </Card>

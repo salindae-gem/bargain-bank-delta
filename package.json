@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "dev:server": "tsx watch backend/index.ts",
+    "dev:all": "concurrently \"pnpm dev:server\" \"pnpm dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

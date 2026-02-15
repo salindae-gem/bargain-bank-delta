@@ -36,4 +36,8 @@ You will research best practices, create implementation plans, and execute the n
 
 - Once you have completed the implementation. pass the control to the Code Reviewer agent for code review and feedback.
 
-- use sub agent : Library Researcher when you need the information about the library you are using. (before using library for the first time, when face with syntax related issue during task completion verify process).
+- use #runSubagent : Library Researcher when you need the information about the library you are using. (before using library for the first time, when face with syntax related issue during task completion verify process).
+
+# Note
+
+- If you need user help to get clarification use 'vscode/askQuestions' tool to ask questions to the user.
