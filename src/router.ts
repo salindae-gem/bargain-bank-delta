@@ -7,7 +7,7 @@ import { createRootRoute, createRoute, Router, redirect } from '@tanstack/react-
 import { LoginPage } from './features/Auth/LoginPage';
 import { SignUpPage } from './features/Auth/SignUpPage';
 import { DashboardPage } from './features/Auth/DashboardPage';
-import useAuthStore from './stores/authStore';
+import { useAuthStore } from './stores/authStore';
 import RootLayout from './layouts/RootLayout';
 
 // Root route
@@ -34,8 +34,8 @@ const dashboardRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/dashboard',
     beforeLoad: async () => {
-        const isAuthenticated = useAuthStore.getState().isAuthenticated;
-        if (!isAuthenticated) {
+        const token = useAuthStore.getState().token;
+        if (!token) {
             throw redirect({
                 to: '/login',
             });
@@ -49,9 +49,9 @@ const indexRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/',
     beforeLoad: async () => {
-        const isAuthenticated = useAuthStore.getState().isAuthenticated;
+        const token = useAuthStore.getState().token;
         throw redirect({
-            to: isAuthenticated ? '/dashboard' : '/login',
+            to: token ? '/dashboard' : '/login',
         });
     },
     component: () => null,

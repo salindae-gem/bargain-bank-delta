@@ -10,8 +10,8 @@ import { useNavigate, Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, AlertCircle, X } from "lucide-react";
-import { useAuth } from "../../hooks/useAuth";
-import useAuthStore from "../../stores/authStore";
+import { useSignup } from "../../hooks/useAuth";
+import { useAuthStore } from "../../stores/authStore";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/PasswordInput";
@@ -43,9 +43,9 @@ import {
 export function SignUpPage() {
   const [successMessage, setSuccessMessage] = useState("");
   const [displayedError, setDisplayedError] = useState<string | null>(null);
-  const { signup, isLoading, error } = useAuth();
+  const signupMutation = useSignup();
   const navigate = useNavigate();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const token = useAuthStore((state) => state.token);
 
   const form = useForm<SignUpFormData>({
     resolver: zodResolver(signupSchema),
@@ -58,10 +58,10 @@ export function SignUpPage() {
 
   // Redirect to dashboard if already authenticated
   useEffect(() => {
-    if (isAuthenticated) {
+    if (token) {
       navigate({ to: "/dashboard" });
     }
-  }, [isAuthenticated, navigate]);
+  }, [token, navigate]);
 
   // Redirect after successful signup
   useEffect(() => {
@@ -75,25 +75,24 @@ export function SignUpPage() {
 
   // Handle error display with auto-dismiss
   useEffect(() => {
-    if (!error) {
+    if (!signupMutation.error) {
       return;
     }
 
-    // Defer state update to next microtask to avoid cascading renders
-    queueMicrotask(() => setDisplayedError(error));
+    const errorMessage = signupMutation.error.message || "Sign up failed";
+    queueMicrotask(() => setDisplayedError(errorMessage));
     const timeoutId = setTimeout(() => setDisplayedError(null), 5000);
     return () => clearTimeout(timeoutId);
-  }, [error]);
+  }, [signupMutation.error]);
 
   const onSubmit = async (data: SignUpFormData) => {
-    try {
-      setSuccessMessage("");
-      setDisplayedError(null);
-      await signup(data.email, data.password, data.passwordConfirmation);
+    setSuccessMessage("");
+    setDisplayedError(null);
+    signupMutation.mutate(data);
+    // Success message will be set when mutation completes
+    if (signupMutation.isSuccess) {
       setSuccessMessage("Your account created! Let's get started.");
       form.reset();
-    } catch (err) {
-      console.error("Signup error:", err);
     }
   };
 
@@ -162,7 +161,7 @@ export function SignUpPage() {
                         type="email"
                         placeholder="you@example.com"
                         autoComplete="email"
-                        disabled={isLoading}
+                        disabled={signupMutation.isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -183,7 +182,7 @@ export function SignUpPage() {
                         onChange={field.onChange}
                         placeholder="Create a strong password"
                         autoComplete="new-password"
-                        disabled={isLoading}
+                        disabled={signupMutation.isPending}
                       />
                     </FormControl>
 
@@ -262,7 +261,7 @@ export function SignUpPage() {
                         onChange={field.onChange}
                         placeholder="Re-enter your password"
                         autoComplete="new-password"
-                        disabled={isLoading}
+                        disabled={signupMutation.isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -273,12 +272,12 @@ export function SignUpPage() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                disabled={isLoading || !isFormValid || !!successMessage}
+                disabled={signupMutation.isPending || !isFormValid || !!successMessage}
                 className="w-full"
                 size="lg"
               >
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isLoading ? "Creating Account..." : "Create Account"}
+                {signupMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {signupMutation.isPending ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
           </Form>

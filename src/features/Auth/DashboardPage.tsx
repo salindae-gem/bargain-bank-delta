@@ -6,8 +6,9 @@
  */
 
 import { useNavigate } from "@tanstack/react-router";
-import { useAuth } from "../../hooks/useAuth";
+import { useCurrentUser, useLogout } from "../../hooks/useAuth";
 import { Button } from "../../components/ui/button";
+import { Loader2 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -17,12 +18,16 @@ import {
 import { formatDate } from "../../utils/dateFormat";
 
 export function DashboardPage() {
-  const { user, logout } = useAuth();
+  const { data: user } = useCurrentUser();
+  const logoutMutation = useLogout();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate({ to: "/login" });
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        navigate({ to: "/login" });
+      },
+    });
   };
 
   return (
@@ -43,8 +48,10 @@ export function DashboardPage() {
             variant="destructive"
             size="lg"
             className="w-full sm:w-auto"
+            disabled={logoutMutation.isPending}
           >
-            Logout
+            {logoutMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {logoutMutation.isPending ? "Logging out..." : "Logout"}
           </Button>
         </div>
 

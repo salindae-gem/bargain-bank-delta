@@ -1,18 +1,11 @@
-/**
- * LoginPage Component
- * Handles user authentication with email and password
- * Accessibility: WCAG 2.1 AA compliant
- * Uses shadcn components for consistent UI
- */
-
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, AlertCircle, X } from "lucide-react";
-import { useAuth } from "../../hooks/useAuth";
-import useAuthStore from "../../stores/authStore";
+import { useLogin } from "../../hooks/useAuth";
+import { useAuthStore } from "../../stores/authStore";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { PasswordInput } from "../../components/PasswordInput";
@@ -42,9 +35,9 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export function LoginPage() {
   const [displayedError, setDisplayedError] = useState<string | null>(null);
-  const { login, isLoading, error } = useAuth();
+  const loginMutation = useLogin();
   const navigate = useNavigate();
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const token = useAuthStore((state) => state.token);
 
   const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -52,31 +45,25 @@ export function LoginPage() {
 
   // Redirect to dashboard if already authenticated
   useEffect(() => {
-    if (isAuthenticated) {
+    if (token) {
       navigate({ to: "/dashboard" });
     }
-  }, [isAuthenticated, navigate]);
+  }, [token, navigate]);
 
   // Handle error display with auto-dismiss
   useEffect(() => {
-    if (!error) {
+    if (!loginMutation.error) {
       return;
     }
 
-    // Defer state update to next microtask to avoid cascading renders
-    queueMicrotask(() => setDisplayedError(error));
+    const errorMessage = loginMutation.error.message || "Login failed";
+    queueMicrotask(() => setDisplayedError(errorMessage));
     const timeoutId = setTimeout(() => setDisplayedError(null), 5000);
     return () => clearTimeout(timeoutId);
-  }, [error]);
+  }, [loginMutation.error]);
 
   const onSubmit = async (data: LoginFormData) => {
-    try {
-      await login(data.email, data.password);
-      form.reset();
-      // Navigation will be triggered by useEffect when isAuthenticated changes
-    } catch (err) {
-      console.error("Login error:", err);
-    }
+    loginMutation.mutate(data);
   };
 
   return (
@@ -132,7 +119,7 @@ export function LoginPage() {
                         type="email"
                         placeholder="you@example.com"
                         autoComplete="email"
-                        disabled={isLoading}
+                        disabled={loginMutation.isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -153,7 +140,7 @@ export function LoginPage() {
                         onChange={field.onChange}
                         placeholder="Enter your password"
                         autoComplete="current-password"
-                        disabled={isLoading}
+                        disabled={loginMutation.isPending}
                       />
                     </FormControl>
                     <FormMessage />
@@ -164,12 +151,12 @@ export function LoginPage() {
               {/* Submit Button */}
               <Button
                 type="submit"
-                disabled={isLoading}
+                disabled={loginMutation.isPending}
                 className="w-full"
                 size="lg"
               >
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isLoading ? "Signing in..." : "Sign In"}
+                {loginMutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {loginMutation.isPending ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </Form>

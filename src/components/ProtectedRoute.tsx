@@ -4,7 +4,7 @@
  */
 
 import type { ReactNode } from 'react';
-import useAuthStore from '../stores/authStore';
+import { useAuthStore } from '../stores/authStore';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -12,9 +12,9 @@ interface ProtectedRouteProps {
 }
 
 export function ProtectedRoute({ children, fallback }: ProtectedRouteProps) {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const token = useAuthStore((state) => state.token);
 
-  if (!isAuthenticated) {
+  if (!token) {
     return fallback || <div>Redirecting to login...</div>;
   }
 
