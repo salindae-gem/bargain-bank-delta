@@ -5,6 +5,8 @@ Generate a Prompt that generates a React component based on [task].
 Guidelines:
 
 - use project "Code Style & Conventions"
+- Avoid hardcoding custom color schemes or forcing specific color palettes
+- Components should remain flexible to work with any Tailwind theme configuration
 - Generate 3 Prompts then evaluate them based on pros and cons.
 
 Prompt should contain:
