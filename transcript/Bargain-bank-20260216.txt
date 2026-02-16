@@ -1,0 +1,463 @@
+WEBVTT
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/39-0
+00:00:08.478 --> 00:00:15.916
+<v Thejani Herath>OK, hello everyone.
+So the new target is to create a saving</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/39-1
+00:00:15.916 --> 00:00:23.727
+<v Thejani Herath>goal for the clients,
+the new bargain bank users with the name</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/39-2
+00:00:23.727 --> 00:00:25.958
+<v Thejani Herath>and target amount.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/41-0
+00:00:26.718 --> 00:00:34.172
+<v Thejani Herath>So that they can start tracking their
+progress and be motivated to save.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/41-1
+00:00:34.172 --> 00:00:41.932
+<v Thejani Herath>So from this they are so but the clients
+want is to enter a goal there like</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/41-2
+00:00:41.932 --> 00:00:46.118
+<v Thejani Herath>emergency or vacations likewise and also.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/42-0
+00:00:46.318 --> 00:00:53.445
+<v Thejani Herath>They want to set a target amount and they
+must be able to optionally set a deadline</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/42-1
+00:00:53.445 --> 00:00:57.602
+<v Thejani Herath>as well.
+And also goal is to save and visible on</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/42-2
+00:00:57.602 --> 00:01:02.438
+<v Thejani Herath>goal goal should be saved and visible on
+the dashboards.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/43-0
+00:01:03.758 --> 00:01:06.758
+<v Thejani Herath>And uh, this experience.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/44-0
+00:01:09.438 --> 00:01:10.158
+<v Thejani Herath>Yeah.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/45-0
+00:01:10.838 --> 00:01:12.598
+<v Thejani Herath>Should be simple.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/46-0
+00:01:16.038 --> 00:01:16.678
+<v Thejani Herath>Um.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/47-0
+00:01:19.518 --> 00:01:23.398
+<v Thejani Herath>Yeah, that's that's a basic requirement.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/48-0
+00:01:28.758 --> 00:01:33.364
+<v Thejani Herath>Oh, sorry.
+There are also a criteria to celebrate</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/48-1
+00:01:33.364 --> 00:01:40.180
+<v Thejani Herath>feedback upon goal creation. Yeah,
+that's the basic requirement that they</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/48-2
+00:01:40.180 --> 00:01:41.838
+<v Thejani Herath>requested from us.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/49-0
+00:01:46.558 --> 00:01:46.678
+<v Thejani Herath>OK.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/50-0
+00:01:48.438 --> 00:01:57.655
+<v Salinda Ekanayake>OK, so the for this MVP, this is MVP.
+So can we like define what what is the</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/50-1
+00:01:57.655 --> 00:02:02.921
+<v Salinda Ekanayake>like?
+Can we like reduce the scope of it to</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/50-2
+00:02:02.921 --> 00:02:04.238
+<v Salinda Ekanayake>some level?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/52-0
+00:02:05.838 --> 00:02:14.445
+<v Salinda Ekanayake>And also this goal name is it?
+Should it be unique or something like</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/52-1
+00:02:14.445 --> 00:02:15.318
+<v Salinda Ekanayake>random?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/53-0
+00:02:18.318 --> 00:02:25.689
+<v Salinda Ekanayake>And also the target amount and pricing,
+should it be like the is the pricing is a</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/53-1
+00:02:25.689 --> 00:02:32.790
+<v Salinda Ekanayake>general unit or is it like a something
+user based price like is it the unit of</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/53-2
+00:02:32.790 --> 00:02:33.958
+<v Salinda Ekanayake>the currency?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/54-0
+00:02:35.238 --> 00:02:39.118
+<v Salinda Ekanayake>Is it a common or is it a per user?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/55-0
+00:02:40.638 --> 00:02:42.358
+<v Salinda Ekanayake>And also.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/56-0
+00:02:43.998 --> 00:02:50.857
+<v Salinda Ekanayake>When what kind of a reaction should we
+show to like when user create a goal?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/56-1
+00:02:50.857 --> 00:02:57.271
+<v Salinda Ekanayake>Should we simply show some kind of
+sparkles in the website or should we</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/56-2
+00:02:57.271 --> 00:02:58.518
+<v Salinda Ekanayake>simply give a?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/57-0
+00:02:59.158 --> 00:03:04.798
+<v Salinda Ekanayake>Like a small sound effect?
+What kind of reaction should we give?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/59-0
+00:03:08.158 --> 00:03:14.902
+<v Thejani Herath>So this should be add by user and also
+when they achieve the goal there should</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/59-1
+00:03:14.902 --> 00:03:21.645
+<v Thejani Herath>be some kind of notification displaying
+to users like trophy or something like</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/59-2
+00:03:21.645 --> 00:03:24.718
+<v Thejani Herath>that that that can be decided by us.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/60-0
+00:03:25.118 --> 00:03:32.121
+<v Thejani Herath>So there's no special requirement,
+but to make the application more user</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/60-1
+00:03:32.121 --> 00:03:36.918
+<v Thejani Herath>friendly and attractive,
+we can use such kind of.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/61-0
+00:03:38.878 --> 00:03:40.558
+<v Nivethan Ariyaratnam>Yeah.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/62-0
+00:03:39.038 --> 00:03:41.198
+<v Thejani Herath>Pete Aswith, yeah.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/64-0
+00:03:41.518 --> 00:03:47.090
+<v Nivethan Ariyaratnam>Is the is this feature targeted only for
+a single user or in future whether do we</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/64-1
+00:03:47.090 --> 00:03:52.525
+<v Nivethan Ariyaratnam>need to add like a add a feature like
+more like two people can create this kind</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/64-2
+00:03:52.525 --> 00:03:56.398
+<v Nivethan Ariyaratnam>of a goal and they can contribute
+together to this goal?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/66-0
+00:04:00.998 --> 00:04:06.462
+<v Salinda Ekanayake>Yeah, one another thing,
+do we need to provide some category in</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/65-0
+00:04:01.118 --> 00:04:01.638
+Yes.
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/66-1
+00:04:06.462 --> 00:04:10.559
+<v Salinda Ekanayake>the goal?
+So is it like should we say that this</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/66-2
+00:04:10.559 --> 00:04:14.998
+<v Salinda Ekanayake>goal is under this category or something
+like that?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/67-0
+00:04:17.118 --> 00:04:20.097
+<v Salinda Ekanayake>Like a,
+let's say it is a goal for travel</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/67-1
+00:04:20.097 --> 00:04:23.218
+<v Salinda Ekanayake>entertainment.
+It could be goal for travel.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/67-2
+00:04:23.218 --> 00:04:27.616
+<v Salinda Ekanayake>It could be something like that,
+some kind of categorization.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/67-3
+00:04:27.616 --> 00:04:29.318
+<v Salinda Ekanayake>Do we need to have that?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/70-0
+00:04:37.318 --> 00:04:41.538
+<v Thejani Herath>So for now,
+they just are individual accounts,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/70-1
+00:04:41.538 --> 00:04:46.924
+<v Thejani Herath>no joint accounts.
+And about the question that Sarim asked,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/70-2
+00:04:46.924 --> 00:04:52.580
+<v Thejani Herath>so like I mentioned earlier,
+the initial requirement they have</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/70-3
+00:04:52.580 --> 00:04:53.478
+<v Thejani Herath>mentioned.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/71-0
+00:04:53.958 --> 00:05:00.175
+<v Thejani Herath>Some inter girl name features.
+So in there they are planning to add</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/71-1
+00:05:00.175 --> 00:05:04.838
+<v Thejani Herath>those girls are definitely girls category
+as well.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/71-2
+00:05:04.838 --> 00:05:11.238
+<v Thejani Herath>So at the moment they don't they didn't
+requested any categorization.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/72-0
+00:05:11.678 --> 00:05:15.218
+<v Thejani Herath>But they are planning to put that uh
+category in the name.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/72-1
+00:05:15.218 --> 00:05:18.038
+<v Thejani Herath>So for now we can just keep this uh girl
+name.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/75-0
+00:05:19.998 --> 00:05:28.638
+<v Chinthaka Withanage>So for now we will guys here we have only
+one go low. Are there any stages I mean.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/74-0
+00:05:20.478 --> 00:05:23.238
+<v Salinda Ekanayake>So for now we will be.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/73-0
+00:05:21.638 --> 00:05:22.118
+<v Thejani Herath>So for now.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/76-0
+00:05:30.158 --> 00:05:36.337
+<v Chinthaka Withanage>Like let's say we spend,
+we saved 1002 thousand 5000 like any</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/79-0
+00:05:36.318 --> 00:05:43.055
+<v Salinda Ekanayake>Any different level of goals or just one
+you're asking about the amount? Yeah,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/76-1
+00:05:36.337 --> 00:05:41.718
+<v Chinthaka Withanage>different level of goals or just one goal
+in the end.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/77-0
+00:05:42.878 --> 00:05:43.718
+<v Chinthaka Withanage>Yeah.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/79-1
+00:05:43.055 --> 00:05:46.722
+<v Salinda Ekanayake>yeah,
+is the amount is going to be a fixed</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/79-2
+00:05:46.722 --> 00:05:50.816
+<v Salinda Ekanayake>amount,
+a predefined set of amounts like levels</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/79-3
+00:05:50.816 --> 00:05:53.118
+<v Salinda Ekanayake>or is it a pre enter value?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/78-0
+00:05:51.318 --> 00:05:53.598
+<v Chinthaka Withanage>Tables or enter free enter value.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/82-0
+00:05:54.558 --> 00:06:01.275
+<v Chinthaka Withanage>Yeah, yeah, yeah, yeah. Like in Milestone.
+Milestone like it. Yeah. For now,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/83-0
+00:05:54.558 --> 00:05:59.171
+<v Salinda Ekanayake>Is it that kind of thing you're asking?
+Yeah, yeah, yeah, like milestone,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/81-0
+00:05:56.278 --> 00:05:58.638
+<v Nivethan Ariyaratnam>Yeah, yeah, like a milestone, milestone,
+milestone thing.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/83-1
+00:05:59.171 --> 00:06:02.911
+<v Salinda Ekanayake>milestone, milestone,
+I think for now we will have a simple</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/82-1
+00:06:01.275 --> 00:06:03.718
+<v Chinthaka Withanage>we'll have a simple 11 goal.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/83-2
+00:06:02.911 --> 00:06:04.158
+<v Salinda Ekanayake>free, free and well.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/85-0
+00:06:04.318 --> 00:06:06.998
+<v Thejani Herath>Yeah, that will be fine.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/84-0
+00:06:05.038 --> 00:06:05.918
+<v Chinthaka Withanage>Yeah, that's fine.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/87-0
+00:06:14.078 --> 00:06:18.554
+<v Chinthaka Withanage>But there is another problem.
+So you said we are showing some flow of</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/87-1
+00:06:18.554 --> 00:06:22.646
+<v Chinthaka Withanage>view or something like that, right?
+When they achieve the goal,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/86-0
+00:06:21.558 --> 00:06:22.278
+<v Thejani Herath>Eat that.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/87-2
+00:06:22.646 --> 00:06:26.674
+<v Chinthaka Withanage>it is a feedback. Yeah,
+we show some kind of a reaction in the</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/87-3
+00:06:26.674 --> 00:06:30.511
+<v Chinthaka Withanage>front end application.
+When you add a goal, you click goal,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/87-4
+00:06:30.511 --> 00:06:31.278
+<v Chinthaka Withanage>goal create.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/88-0
+00:06:31.358 --> 00:06:37.085
+<v Chinthaka Withanage>It will show some kind of a sparkles or
+something like a feedback. Yeah, yeah,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/88-1
+00:06:37.085 --> 00:06:42.376
+<v Chinthaka Withanage>since this is a web application,
+are we going to use it in mobile loads,</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/88-2
+00:06:42.376 --> 00:06:47.958
+<v Chinthaka Withanage>right? So in the responsive wise,
+how do we proceed with this kind of stuff?</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/89-0
+00:06:51.638 --> 00:06:51.878
+<v Chinthaka Withanage>OK.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/91-0
+00:06:52.358 --> 00:06:56.438
+<v Salinda Ekanayake>It will be automatically responsive,
+so we do not have to worry about that.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/90-0
+00:06:54.598 --> 00:06:55.918
+<v Chinthaka Withanage>OK, cool.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/95-0
+00:07:08.958 --> 00:07:13.985
+<v Chinthaka Withanage>Oh, forgot to say when come to testing.
+I would like to use playwrite as</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/95-1
+00:07:13.985 --> 00:07:19.769
+<v Chinthaka Withanage>automation tool for this UI testing so we
+can record playwrite generate to create a</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/95-2
+00:07:19.769 --> 00:07:24.038
+<v Chinthaka Withanage>script so we can use that descript to
+execute the automation.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/96-0
+00:07:24.238 --> 00:07:24.438
+<v Chinthaka Withanage>Yeah.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/101-0
+00:07:39.438 --> 00:07:43.060
+<v Thejani Herath>Oh, OK.
+So seems I hope that everyone got the</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/101-1
+00:07:43.060 --> 00:07:46.919
+<v Thejani Herath>comment clearly.
+So since there are no any other</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/101-2
+00:07:46.919 --> 00:07:52.352
+<v Thejani Herath>clarifications need to be done,
+I think we can conclude the session.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/101-3
+00:07:52.352 --> 00:07:54.478
+<v Thejani Herath>Thank you for joining. Bye.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/100-0
+00:07:53.918 --> 00:07:55.638
+<v Nivethan Ariyaratnam>Thanks and have a nice day.</v>
+
+34d44c7c-ad15-404d-9ecc-e26ddda788b1/103-0
+00:07:54.598 --> 00:07:54.838
+<v Thejani Herath>Thanks.</v>
