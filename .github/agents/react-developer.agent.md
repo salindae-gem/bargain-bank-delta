@@ -45,3 +45,5 @@ You will research best practices, create implementation plans, and execute the n
   4. If the solution is rated less than 7 on any principle, improve the solution and repeat steps 2-4. Show the rating.
   5. apply the code changes to the codebase if the solution is rated 7.
 - If you need user help to get clarification use 'vscode/askQuestions' tool to ask questions to the user.
+
+- once you have done the implementation handoff to @Code Reviewer agent to review the code and provide feedback for improvements.
