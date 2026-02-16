@@ -40,11 +40,7 @@ See [docs/business-requirements.md](../docs/business-requirements.md) for full p
 
 ### Architecture Decision
 
-**PWA** - Single web codebase for fastest MVP deployment
-
-See [docs/technical/](../docs/technical/) for detailed option analysis.
-
----
+## **PWA** - Single web codebase for fastest MVP deployment
 
 ## Code Structure
 
@@ -95,6 +91,7 @@ bargain-bank/
 - Use component co-location: place styles and hooks near where they're used
 - Prefer composition over deeply nested props
 - Keep components focused on a single responsibility
+- Use shadcn/ui components for base UI elements, customize with Tailwind as needed
 
 ### File Naming
 
@@ -109,6 +106,11 @@ bargain-bank/
 - Use shadcn/ui components for base UI elements
 - Avoid custom CSS where Tailwind can solve it
 - Mobile-first: start with mobile styles, then add breakpoints
+
+### Color Palette
+
+- Use **TailwindCSS theme-based colors** (Tailwind's default palette already complies with WCAG 2.1 AA contrast requirements)
+- Leverage Tailwind's semantic color utilities (e.g., `text-primary`, `bg-primary`) for consistency
 
 ### Testing
 
@@ -149,16 +151,16 @@ User
 
 ```bash
 # Frontend
-npm install                 # Install dependencies
-npm run dev                # Start dev server (localhost:5173)
-npm run build              # Build for production
-npm run preview            # Preview production build locally
-npm run test               # Run tests
-npm run test:coverage      # Run tests with coverage
+pnpm install                 # Install dependencies
+pnpm run dev                # Start dev server (localhost:5173 frontend, localhost:3000 backend) (both backend and frontend)
+pnpm run build              # Build for production
+pnpm run preview            # Preview production build locally
+pnpm run test               # Run tests
+pnpm run test:coverage      # Run tests with coverage
 
 # Backend (if applicable)
-npm run dev:backend        # Start backend dev server
-npm run deploy             # Deploy (Cloudflare/Node.js)
+pnpm run dev:server        # Start backend dev server (localhost:3000)
+pnpm run deploy             # Deploy (Cloudflare/Node.js)
 ```
 
 **Note:** Commands will be added once project is initialized.
@@ -212,26 +214,21 @@ All features must meet WCAG 2.1 AA standards:
 
 ---
 
-## Starting Development
+## Development workflow
 
-1. **Confirm tech decisions** from [docs/technical/](../docs/technical/)
-2. **Set up project structure** using recommended stack above
-3. **Create base components** using shadcn/ui (Button, Input, Card, Dialog, etc.)
-4. **Implement authentication** first (foundational for all other features)
-5. **Build savings goals CRUD** (create, read, update, delete)
-6. **Implement savings action recording** with feedback
-7. **Add gamification** (streaks, badges, progress)
-8. **Testing & refinement**
+1. **Confirm implementation plan** from [docs/plan/](../docs/plans//)
+2. **Follow the plan** update Todo task based on the plan
+3. **Implement changes** one by one task and update task status
+4. **Testing & refinement**
 
 ---
 
 ## Resources
 
 - [Business Requirements](../docs/business-requirements.md)
-- [User Story: Celebrate Saving Action](../docs/user-stories/US-001-celebrate-saving-action.md)
-- [Technical Options Analysis](../docs/technical/)
+- [User Story](../docs/user-stories/)
 
 ---
 
-**Last Updated:** February 14, 2026  
+**Last Updated:** February 15, 2026  
 **Maintained By:** Development Team
